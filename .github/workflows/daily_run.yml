@@ -20,7 +20,9 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install akshare requests pandas
+          pip install tushare requests pandas
 
       - name: Run script
+        env:
+          TUSHARE_TOKEN: ${{ secrets.TUSHARE_TOKEN }}
         run: python fetch_haixing.py
