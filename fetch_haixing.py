@@ -20,7 +20,7 @@ def get_haixing_data():
     trade_date = str(df_hist['日期'].iloc[-1])
     
     # 2. 抓取估值指标 (PE-TTM)
-    df_indicator = ak.stock_a_lg_indicator(symbol=symbol)
+    df_indicator = ak.stock_a_indicator_lg(symbol=symbol)
     pe_ttm = round(float(df_indicator['pe_ttm'].iloc[-1]), 2)
     
     # 3. 组装数据包
