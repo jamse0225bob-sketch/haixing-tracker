@@ -5,7 +5,7 @@ import datetime
 import tushare as ts
 
 # 你的 Google Sheets 接收端网址
-WEB_APP_URL = "YOUR_GOOGLE_WEB_APP_URL" # 请确保这里填入真实的网址
+WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyHOcngO7GotE7CYpyxM2_bjg5vDbAZnGAhYRera95Tu56IHBs430qcOkhJ6DuCvF6P/exec" # 请确保这里填入真实的网址
 
 def get_haixing_data():
     symbol = "603556.SH" # Tushare 的代码后缀规则
