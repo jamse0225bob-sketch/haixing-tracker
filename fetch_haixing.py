@@ -47,12 +47,16 @@ def get_haixing_data():
         print(f"警告: 估值接口受限 ({e})。启动非对称降级，舍弃 PE，保全量价生命线。")
         pe_ttm = "限流暂缺"
     
-    # ================= 阶段 3：数据清洗与组装 =================
+    # ================= 阶段 3：数据清洗与组装 (新增偏离度补丁) =================
+    # 计算当前收盘价偏离 60日均线的百分比，保留两位小数
+    deviation = round(((latest_close - ma60) / ma60) * 100, 2)
+    
     payload = {
         "date": actual_trade_date,
         "close": latest_close,
         "ma60": ma60,
-        "pe_ttm": pe_ttm
+        "pe_ttm": pe_ttm,
+        "deviation": deviation  # 传给表格的新增字段
     }
     print(f"数据清洗完毕: {payload}")
     
