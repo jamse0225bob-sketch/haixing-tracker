@@ -31,9 +31,17 @@ def get_haixing_data():
     ma60 = round(float(df_daily['close'].mean()), 2)
     trade_date = str(df_daily['trade_date'].iloc[0])
     
-    # 2. 抓取每日估值指标 (PE-TTM)
-    df_basic = pro.daily_basic(ts_code=symbol, end_date=trade_date_str, fields='ts_code,trade_date,pe_ttm')
-    pe_ttm = round(float(df_basic['pe_ttm'].iloc[0]), 2) if not df_basic.empty else 0.0
+    # 2. 抓取每日估值指标 (PE-TTM) - 增加防频繁测试的容错装甲
+    try:
+        df_basic = pro.daily_basic(ts_code=symbol, end_date=trade_date_str, fields='ts_code,trade_date,pe_ttm')
+        if not df_basic.empty:
+            pe_ttm = round(float(df_basic['pe_ttm'].iloc[0]), 2)
+        else:
+            pe_ttm = "数据未生成"
+    except Exception as e:
+        print(f"警告: 估值接口受限 ({e})。启动降级机制，舍弃 PE 数据，保全量价数据。")
+        # 绝不赋值为 0 以防 Spark 误判，直接传入明确的文本提示
+        pe_ttm = "限流暂缺"
     
     # 3. 组装数据包
     payload = {
