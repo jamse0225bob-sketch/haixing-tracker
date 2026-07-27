@@ -1,11 +1,12 @@
-name: Push Stock Data to Google Sheets
+name: Daily Run fetch_haixing
 
 on:
+  workflow_dispatch: # 保留这个开关，方便你随时手动测试
   schedule:
-    # 北京时间每个交易日 15:15 自动触发运行 (UTC 时间 07:15)
+    # A股收盘为北京时间15:00。
+    # 我们设定在 UTC 07:15 (即北京时间 15:15) 触发运行。
+    # 1-5 代表周一到周五运行 (规避周末无效消耗)。
     - cron: '15 7 * * 1-5'
-  workflow_dispatch: # 允许你在 GitHub 界面随时点击手动运行测试
-
 jobs:
   run-script:
     runs-on: ubuntu-latest
