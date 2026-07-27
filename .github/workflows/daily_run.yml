@@ -21,7 +21,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install tushare pandas requests yfinance
+          run: pip install tushare pandas requests yfinance akshare
 
       - name: Run script
         env:
