@@ -59,12 +59,9 @@ def get_haixing_data():
     except Exception:
         pe_ttm = "限流暂缺"
         
-    try:
-        # 获取最新的财务指标：dt_netprofit_yoy (扣非净利润同比增速)
-        df_fina = pro.fina_indicator(ts_code=SYMBOL, fields='end_date,dt_netprofit_yoy', limit=1)
-        net_profit_yoy = round(float(df_fina['dt_netprofit_yoy'].iloc[0]), 2) if not df_fina.empty else "数据暂缺"
-    except Exception:
-        net_profit_yoy = "财务接口限流"
+    # 获取最新的财务指标：dt_netprofit_yoy (扣非净利润同比增速)
+    # 直接赋值，剥离一切网络请求与异常捕获
+    net_profit_yoy = "参考表格手工维护"
 
     # === 3. 宏观防线：汇率波动 ===
     # 利用 yfinance 获取 USD/CNY (美元兑人民币) 近一个月的走势
